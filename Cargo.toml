@@ -1,0 +1,8 @@
+[package]
+name = "netstat_continuous"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+netstat2 = "0.11"
+chrono = "0.4"
