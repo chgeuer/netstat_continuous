@@ -38,12 +38,14 @@ jobs:
       - name: Create Release and Upload Asset
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG_NAME: ${{ github.ref_name || inputs.version }}
         run: |
+          # Determine the tag name
+          TAG_NAME="${{ github.event_name == 'push' && github.ref_name || inputs.version }}"
+          
           # Create tag if running manually
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            git tag ${{ inputs.version }}
-            git push origin ${{ inputs.version }}
+            git tag $TAG_NAME
+            git push origin $TAG_NAME
           fi
 
           # Create release
@@ -52,8 +54,9 @@ jobs:
             --notes "Release $TAG_NAME" \
             --repo "${{ github.repository }}"
 
-          # Upload binary
-          gh release upload "$TAG_NAME" \
-            target/x86_64-unknown-linux-gnu/release/${{ env.BINARY_NAME }} \
-            --name "${{ env.BINARY_NAME }}-linux-x64" \
-            --repo "${{ github.repository }}"
+          # Upload binary with the correct file name
+          cd target/x86_64-unknown-linux-gnu/release/
+          mv "${{ env.BINARY_NAME }}" "${{ env.BINARY_NAME }}-linux-x64"
+          gh release upload "$TAG_NAME" "${{ env.BINARY_NAME }}-linux-x64" \
+            --repo "${{ github.repository }}" \
+            --clobber
