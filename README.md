@@ -18,7 +18,7 @@ chmod +x ./netstat_continuous
 ## Sample run
 
 ```shell
-$ ./netstat_continuous-linux-x64
+$ ./netstat_continuous
 
 {"timestamp":"2024-12-12T10:30:25Z", "established":     10, "time_wait":     50, "close_wait":      0, "syn_sent":      0, "syn_received":      0, "fin_wait1":      0, "fin_wait2":      0, "closing":      0, "last_ack":      0, "listen":      5}
 {"timestamp":"2024-12-12T10:30:26Z", "established":     10, "time_wait":     50, "close_wait":      0, "syn_sent":      0, "syn_received":      0, "fin_wait1":      0, "fin_wait2":      0, "closing":      0, "last_ack":      0, "listen":      5}
