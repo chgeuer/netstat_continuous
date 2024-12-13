@@ -1,7 +1,7 @@
 #!/bin/bash
 
 while true; do
-    ss -ta | awk -v timestamp="$(date -u +"%Y-%m-%dT%H:%M:%SZ")" '
+    ss --tcp --all | awk -v timestamp="$(date -u +"%Y-%m-%dT%H:%M:%SZ")" '
         BEGIN { established = 0; time_wait = 0; close_wait = 0; syn_sent = 0; syn_recv = 0; fin_wait1 = 0; fin_wait2 = 0; closing = 0; last_ack = 0; listen = 0 }
         
         /^ESTAB /      { established++ }
